@@ -2,7 +2,7 @@ POST  http://localhost:5000/api/auth/register
 Content-Type: application/json
 
 {
-    "username": "tien",
+    "username": "duy",
     "password": "123456"
 }
 
@@ -14,4 +14,16 @@ Content-Type: application/json
 {
     "username": "tiennguyen",
     "password": "123456"
+}
+
+###
+
+POST  http://localhost:5000/api/posts
+Content-Type: application/json
+
+{
+    "title": "Learn React",
+    "description": "abc",
+    "url": "google.com",
+    "status": "LEARNING"
 }

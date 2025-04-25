@@ -1,16 +1,19 @@
-import express from 'express';
-import { connect } from './config/db.js';
-import 'dotenv/config'
+import express from "express";
+import { connect } from "./config/db.js";
+import "dotenv/config";
 
-import {authRouter } from './routes/auth.js';
+import authRouter from "./routes/auth.js";
+import postRouter from "./routes/post.js";
 
 connect();
 
 const app = express();
+
 app.use(express.json());
 
 // app.get('/', (req, res) => res.send('Hello, world!'));
-app.use('/api/auth', authRouter );
+app.use("/api/auth", authRouter);
+app.use("/api/posts", postRouter);
 
 const PORT = 5000;
 
