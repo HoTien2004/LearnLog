@@ -12,7 +12,7 @@ POST  http://localhost:5000/api/auth/login
 Content-Type: application/json
 
 {
-    "username": "tiennguyen",
+    "username": "duy",
     "password": "123456"
 }
 
@@ -20,10 +20,36 @@ Content-Type: application/json
 
 POST  http://localhost:5000/api/posts
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2N2ZkMjIwYjFiOWYxZDgwY2FjMTBkYjIiLCJpYXQiOjE3NDU1NjYyMDh9.zbpyhSmMhwe8eG3enp40U5mMD064opRxrlKxvYm6zyo
 
 {
-    "title": "Learn React",
-    "description": "abc",
-    "url": "google.com",
-    "status": "LEARNING"
+    "title": "Learn CSS",
+    "description": "222",
+    "url": "tiktok.com",
+    "status": "LEARNED"
 }
+
+###
+
+GET  http://localhost:5000/api/posts
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2N2ZmMmExNzI3OTUyMTIxM2E1YWRkZTAiLCJpYXQiOjE3NDU1NjgwMTZ9.Zvx6DBiWtoFFUq-3L-wP3VxIMA_6RE9KdoJxvrMn21M
+
+###
+
+PUT  http://localhost:5000/api/posts/680b3a0ec54fbedd49a37cca
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2N2ZkMjIwYjFiOWYxZDgwY2FjMTBkYjIiLCJpYXQiOjE3NDU1NjYyMzV9.5r_lwr39uLEvoOGcLX8T5j9pqg8sDwEZhRiyJpKtD08
+
+{
+    "title": "Learn Vue",
+    "description": "666",
+    "url": "https://google.com",
+    "status": "TO LEARN"
+}
+
+###
+
+DELETE  http://localhost:5000/api/posts/680b359312e85cac23facdda
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2N2ZmMmExNzI3OTUyMTIxM2E1YWRkZTAiLCJpYXQiOjE3NDU1NjgwMTZ9.Zvx6DBiWtoFFUq-3L-wP3VxIMA_6RE9KdoJxvrMn21M

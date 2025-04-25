@@ -3,7 +3,7 @@ import { connect } from "./config/db.js";
 import "dotenv/config";
 
 import authRouter from "./routes/auth.js";
-import postRouter from "./routes/post.js";
+import postsRouter from "./routes/posts.js";
 
 connect();
 
@@ -13,7 +13,7 @@ app.use(express.json());
 
 // app.get('/', (req, res) => res.send('Hello, world!'));
 app.use("/api/auth", authRouter);
-app.use("/api/posts", postRouter);
+app.use("/api/posts", postsRouter);
 
 const PORT = 5000;
 
