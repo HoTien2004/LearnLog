@@ -6,8 +6,10 @@ import { AuthContext } from '../../contexts/AuthContext'
 
 const LoginForm = () => {
   const navigate = useNavigate()
+  // Context
+  const { loginUser } = useContext(AuthContext)
 
-  const [ loginForm, setLoginForm] = useState({
+  const [loginForm, setLoginForm] = useState({
     username: '',
     password: ''
   })
@@ -21,9 +23,23 @@ const LoginForm = () => {
     })
   }
 
+  const login = async e => {
+    e.preventDefault()
+    try {
+      const loginData = await loginUser(loginForm)
+        if (loginData.success) {
+          navigate('/dashboard')
+        } else {
+          alert(loginData.message)
+        }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   return (
     <>
-      <Form className="my-4">
+      <Form className="my-4" onSubmit={login}>
         <Form.Group className="mb-3">
           <Form.Control
             type="text"

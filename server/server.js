@@ -1,7 +1,7 @@
 import express from "express";
 import { connect } from "./config/db.js";
 import "dotenv/config";
-
+import cors from "cors";
 import authRouter from "./routes/auth.js";
 import postsRouter from "./routes/posts.js";
 
@@ -9,9 +9,9 @@ connect();
 
 const app = express();
 
+app.use(cors());
 app.use(express.json());
 
-// app.get('/', (req, res) => res.send('Hello, world!'));
 app.use("/api/auth", authRouter);
 app.use("/api/posts", postsRouter);
 
