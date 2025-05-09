@@ -3,6 +3,25 @@ const router = express.Router();
 import argon2 from "argon2";
 import jwt from "jsonwebtoken";
 import User from "../models/User.js";
+import verifyToken from "../middleware/auth.js";
+
+// @route GET /api/auth
+// @desc Check if user is logged in
+// @access Public
+router.get("/", verifyToken, async (req, res) => {
+  try {
+    const user = await User.findById(req.userId).select("-password");
+    if (!user) {
+      return res
+        .status(400)
+        .json({ success: false, message: "User not found" });
+    }
+    res.json({ success: true, user });
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).json({ success: false, message: "Server error" });
+  }
+});
 
 // @route POST /api/auth/register
 router.post("/register", async (req, res) => {

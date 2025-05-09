@@ -9,6 +9,7 @@ const LoginForm = () => {
   // Context
   const { loginUser } = useContext(AuthContext)
 
+  // Local state
   const [loginForm, setLoginForm] = useState({
     username: '',
     password: ''
@@ -29,8 +30,6 @@ const LoginForm = () => {
       const loginData = await loginUser(loginForm)
         if (loginData.success) {
           navigate('/dashboard')
-        } else {
-          alert(loginData.message)
         }
     } catch (error) {
       console.log(error);
