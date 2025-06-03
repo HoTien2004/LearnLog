@@ -1,8 +1,9 @@
-import { React, useState, useContext} from 'react'
+import { React, useState, useContext } from 'react'
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
-import { useNavigate } from 'react-router-dom'
 import { AuthContext } from '../../contexts/AuthContext'
+import AlertMessage from '../Layout/AlertMessage'
+import { useNavigate } from 'react-router-dom'
 
 const LoginForm = () => {
   const navigate = useNavigate()
@@ -14,6 +15,8 @@ const LoginForm = () => {
     username: '',
     password: ''
   })
+
+  const [alert, setAlert] = useState(null);
 
   const { username, password } = loginForm
 
@@ -28,9 +31,15 @@ const LoginForm = () => {
     e.preventDefault()
     try {
       const loginData = await loginUser(loginForm)
-        if (loginData.success) {
-          navigate('/dashboard')
-        }
+      if (!loginData.success) {
+        setAlert({
+          type: 'danger',
+          message: loginData.message
+        })
+        setTimeout(() => {
+          setAlert(null)
+        }, 3000)
+      }
     } catch (error) {
       console.log(error);
     }
@@ -39,6 +48,7 @@ const LoginForm = () => {
   return (
     <>
       <Form className="my-4" onSubmit={login}>
+        <AlertMessage info={alert} />
         <Form.Group className="mb-3">
           <Form.Control
             type="text"
@@ -65,7 +75,7 @@ const LoginForm = () => {
           Login
         </Button>
       </Form>
-      
+
       <p className="d-flex align-items-center gap-2">
         Don't have an account?
         <Button
