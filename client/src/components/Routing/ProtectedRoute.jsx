@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import { Navigate } from 'react-router-dom';
 import { AuthContext } from '../../contexts/AuthContext';
 import Spinner from 'react-bootstrap/Spinner';
+import NavbarMenu from '../Layout/NavbarMenu';
 
 const ProtectedRoute = ({ children }) => {
     const {
@@ -20,7 +21,12 @@ const ProtectedRoute = ({ children }) => {
         return <Navigate to="/login" />;
     }
 
-    return children;
+    return (
+        <>
+            <NavbarMenu />
+            {children}
+        </>
+    );
 };
 
 export default ProtectedRoute;
