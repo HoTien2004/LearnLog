@@ -1,24 +1,24 @@
 import React from 'react'
 import Badge from 'react-bootstrap/Badge'
-import Button from 'react-bootstrap/Button'
 import Card from 'react-bootstrap/Card'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
+import ActionButtons from './ActionButtons'
 
 const SinglePost = ({ post: { _id, status, title, description, url } }) => {
     return (
-        <Card className='shadow' border={status === 'LEARNED' ? 'success' : status === 'LEARNING' ? 'warning' : 'danger'}>
+        <Card className="shadow h-100" border={status === 'LEARNED' ? 'success' : status === 'LEARNING' ? 'warning' : 'danger'}>
             <Card.Body>
                 <Card.Title>
-                    <Row>
-                        <Col>
-                            <p className='post-title'>{title}</p>
-                            <Badge pill variant={status === 'LEARNED' ? 'success' : status === 'LEARNING' ? 'warning' : 'danger'}>
+                    <Row className="align-items-center">
+                        <Col xs={8}>
+                            <p className="post-title">{title}</p>
+                            <Badge pill bg={status === 'LEARNED' ? 'success' : status === 'LEARNING' ? 'warning' : 'danger'}>
                                 {status}
                             </Badge>
                         </Col>
-                        <Col className='text-right'>
-                            Buttons
+                        <Col xs={4} className="text-end">
+                            <ActionButtons url={url} postId={_id} />
                         </Col>
                     </Row>
                 </Card.Title>
@@ -26,7 +26,7 @@ const SinglePost = ({ post: { _id, status, title, description, url } }) => {
                     {description}
                 </Card.Text>
             </Card.Body>
-        </Card>
+        </Card >
     )
 }
 

@@ -23,10 +23,10 @@ Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODE4MzdkMzNkNGY0ODQ3MzI3Y2UxMjMiLCJpYXQiOjE3NDY0MTc2NzF9.-70F6P1wpF5liMiFGL-i8xf750GALyN4bZEEMmAa0xg
 
 {
-    "title": "JAVA",
-    "description": "3",
-    "url": "java.com",
-    "status": "TO LEARN"
+    "title": "GOLANG",
+    "description": "golang",
+    "url": "golang.com",
+    "status": "LEARNED"
 }
 
 ###
