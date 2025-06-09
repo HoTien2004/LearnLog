@@ -5,6 +5,7 @@ import Spinner from 'react-bootstrap/Spinner'
 import Button from 'react-bootstrap/Button'
 import Card from 'react-bootstrap/Card'
 import Row from 'react-bootstrap/Row'
+import Toast from 'react-bootstrap/Toast'
 import Col from 'react-bootstrap/Col'
 import SinglePost from '../components/posts/SinglePost'
 import AddPostModal from '../components/posts/AddPostModal'
@@ -12,7 +13,14 @@ import addIcon from '../assets/plus-circle-fill.svg'
 
 const Dashboard = () => {
   // Contexts
-  const { postState: { posts, postsLoading }, getPosts, isOpenModal, setIsOpenModal } = useContext(PostContext)
+  const {
+    postState: { posts, postsLoading },
+    getPosts,
+    isOpenModal,
+    setIsOpenModal,
+    showToast: { show, message, type },
+    setShowToast } = useContext(PostContext)
+
   const { authState: { user: { username } } } = useContext(AuthContext)
 
   // Start: Get all posts
@@ -67,6 +75,30 @@ const Dashboard = () => {
     <>
       {body}
       <AddPostModal />
+
+      {/*After post is added, show Toast*/}
+      <Toast
+        show={show}
+        style={{
+          position: 'fixed',
+          top: '20px',
+          right: '20px',
+        }}
+        className={`bg-${type} text-white`}
+        onClose={() => {
+          setShowToast({
+            show: false,
+            message: '',
+            type: null
+          })
+        }}
+        delay={3000}
+        autohide
+      >
+        <Toast.Body>
+          <strong>{message}</strong>
+        </Toast.Body>
+      </Toast>
     </>
   )
 }

@@ -1,10 +1,22 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import Button from 'react-bootstrap/Button'
 import playIcon from '../../assets/play-btn.svg'
 import editIcon from '../../assets/pencil.svg'
 import deleteIcon from '../../assets/trash.svg'
+import { PostContext } from '../../contexts/PostContext'
 
 const ActionButtons = ({ url, postId }) => {
+    const { deletePost, setShowToast } = useContext(PostContext)
+
+    const handleDelete = async () => {
+        const { success, message } = await deletePost(postId)
+        setShowToast({
+            show: true,
+            message,
+            type: success ? 'success' : 'danger'
+        })
+    }
+
     return (
         <div className="d-flex justify-content-end gap-2">
             <Button
@@ -24,6 +36,7 @@ const ActionButtons = ({ url, postId }) => {
             <Button
                 className="post-button btn-sm"
                 variant="outline-danger"
+                onClick={handleDelete}
             >
                 <img src={deleteIcon} alt="delete" width="24" height="24" />
             </Button>

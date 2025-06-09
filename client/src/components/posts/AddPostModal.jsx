@@ -1,13 +1,43 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
 import { PostContext } from '../../contexts/PostContext'
 
 const AddPostModal = () => {
-    const { isOpenModal, setIsOpenModal } = useContext(PostContext)
+    const { isOpenModal, setIsOpenModal, addPost, setShowToast } = useContext(PostContext)
+
+    // State
+    const [newPost, setNewPost] = useState({
+        title: '',
+        description: '',
+        url: '',
+        status: 'TO LEARN'
+    })
+
+    const { title, description, url } = newPost
+
+    const onChangeNewPostForm = e => {
+        setNewPost({ ...newPost, [e.target.name]: e.target.value })
+    }
 
     const closeDialog = () => {
+        resetAddPostData()
+    }
+
+    const onSubmit = async e => {
+        e.preventDefault()
+        const { success, message } = await addPost(newPost)
+        resetAddPostData()
+        setShowToast({
+            show: true,
+            message,
+            type: success ? 'success' : 'danger'
+        })
+    }
+
+    const resetAddPostData = () => {
+        setNewPost({ title: '', description: '', url: '', status: 'TO LEARN' })
         setIsOpenModal(false)
     }
 
@@ -21,7 +51,7 @@ const AddPostModal = () => {
                     onClick={() => setIsOpenModal(false)}
                 /> */}
             </Modal.Header>
-            <Form>
+            <Form onSubmit={onSubmit}>
                 <Modal.Body>
                     <Form.Group className="mb-3">
                         <Form.Control
@@ -30,6 +60,8 @@ const AddPostModal = () => {
                             name="title"
                             required
                             aria-describedby="title-help"
+                            value={title}
+                            onChange={onChangeNewPostForm}
                         />
                         <Form.Text id="title-help" muted>
                             Required
@@ -42,6 +74,8 @@ const AddPostModal = () => {
                             rows={3}
                             placeholder="Description"
                             name="description"
+                            value={description}
+                            onChange={onChangeNewPostForm}
                         />
                     </Form.Group>
 
@@ -50,6 +84,8 @@ const AddPostModal = () => {
                             type="text"
                             placeholder="YouTube Tutorial URL"
                             name="url"
+                            value={url}
+                            onChange={onChangeNewPostForm}
                         />
                     </Form.Group>
                 </Modal.Body>

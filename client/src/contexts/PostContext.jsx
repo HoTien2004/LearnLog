@@ -1,6 +1,12 @@
 import React, { createContext, useReducer, useState } from 'react'
 import { PostReducer } from '../reducers/PostReducer'
-import { apiUrl, POSTS_LOADED_SUCCESS, POSTS_LOADED_FAIL } from './constants'
+import {
+  apiUrl,
+  POSTS_LOADED_SUCCESS,
+  POSTS_LOADED_FAIL,
+  ADD_POST,
+  DELETE_POST
+} from './constants'
 import axios from 'axios'
 
 export const PostContext = createContext()
@@ -12,6 +18,11 @@ export const PostContextProvider = ({ children }) => {
   })
 
   const [isOpenModal, setIsOpenModal] = useState(false)
+  const [showToast, setShowToast] = useState({
+    show: false,
+    message: '',
+    type: null,
+  })
 
   // Get all posts
   const getPosts = async () => {
@@ -25,8 +36,51 @@ export const PostContextProvider = ({ children }) => {
     }
   }
 
+  // Add post
+  const addPost = async (newPost) => {
+    try {
+      const response = await axios.post(`${apiUrl}/posts`, newPost)
+      if (response.data.success) {
+        dispatch({
+          type: ADD_POST,
+          payload: response.data.post,
+        })
+        return response.data
+      }
+    } catch (error) {
+      return error.response.data ? error.response.data : { success: false, message: 'Server error' }
+    }
+  }
+
+  // Delete post
+  const deletePost = async (postId) => {
+    try {
+      const response = await axios.delete(`${apiUrl}/posts/${postId}`)
+      if (response.data.success) {
+        dispatch({
+          type: DELETE_POST,
+          payload: postId,
+        })
+        return response.data
+      }
+    } catch (error) {
+      return error.response.data ? error.response.data : { success: false, message: 'Server error' }
+    }
+  }
+
+  // Put post
+
   // Post context data
-  const postContextData = { postState, getPosts, isOpenModal, setIsOpenModal }
+  const postContextData = {
+    postState,
+    getPosts,
+    isOpenModal,
+    setIsOpenModal,
+    addPost,
+    showToast,
+    setShowToast,
+    deletePost
+  }
 
   return (
     <PostContext.Provider value={postContextData}>

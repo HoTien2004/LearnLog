@@ -111,7 +111,7 @@ router.delete("/:id", verifyToken, async (req, res) => {
       });
     }
 
-    res.json({ success: true, post: deletedPost });
+    res.json({ success: true, message: "Deleted successful", post: deletedPost });
   } catch (error) {
     console.error(error.message);
     res.status(500).json({ success: false, message: "Server error" });
