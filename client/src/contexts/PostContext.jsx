@@ -5,19 +5,24 @@ import {
   POSTS_LOADED_SUCCESS,
   POSTS_LOADED_FAIL,
   ADD_POST,
-  DELETE_POST
+  DELETE_POST,
+  FIND_POST_UPDATE,
+  UPDATED_POST
 } from './constants'
 import axios from 'axios'
 
 export const PostContext = createContext()
 
 export const PostContextProvider = ({ children }) => {
+  // State
   const [postState, dispatch] = useReducer(PostReducer, {
     posts: [],
+    postUpdate: null,
     postsLoading: true,
   })
 
   const [isOpenModal, setIsOpenModal] = useState(false)
+  const [showUpdatePostModal, setShowUpdatePostModal] = useState(false)
   const [showToast, setShowToast] = useState({
     show: false,
     message: '',
@@ -68,7 +73,30 @@ export const PostContextProvider = ({ children }) => {
     }
   }
 
-  // Put post
+  // Find post when user clicks on edit button
+  const findPostUpdate = (postId) => {
+    const post = postState.posts.find(post => post._id === postId)
+    dispatch({
+      type: FIND_POST_UPDATE,
+      payload: post,
+    })
+  }
+
+  // Update post
+  const updatePost = async (updatedPost) => {
+    try {
+      const response = await axios.put(`${apiUrl}/posts/${updatedPost._id}`, updatedPost)
+      if (response.data.success) {
+        dispatch({
+          type: UPDATED_POST,
+          payload: response.data.post,
+        })
+        return response.data
+      }
+    } catch (error) {
+      return error.response.data ? error.response.data : { success: false, message: 'Server error' }
+    }
+  }
 
   // Post context data
   const postContextData = {
@@ -79,7 +107,11 @@ export const PostContextProvider = ({ children }) => {
     addPost,
     showToast,
     setShowToast,
-    deletePost
+    showUpdatePostModal,
+    setShowUpdatePostModal,
+    deletePost,
+    findPostUpdate,
+    updatePost
   }
 
   return (

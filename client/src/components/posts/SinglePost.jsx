@@ -18,7 +18,7 @@ const SinglePost = ({ post: { _id, status, title, description, url } }) => {
                             </Badge>
                         </Col>
                         <Col xs={4} className="text-end">
-                            <ActionButtons url={url} postId={_id} />
+                            <ActionButtons url={url} _id={_id} />
                         </Col>
                     </Row>
                 </Card.Title>

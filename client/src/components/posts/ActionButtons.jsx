@@ -5,16 +5,30 @@ import editIcon from '../../assets/pencil.svg'
 import deleteIcon from '../../assets/trash.svg'
 import { PostContext } from '../../contexts/PostContext'
 
-const ActionButtons = ({ url, postId }) => {
-    const { deletePost, setShowToast } = useContext(PostContext)
+const ActionButtons = ({ url, _id }) => {
+    const { deletePost, setShowToast, findPostUpdate, setShowUpdatePostModal } = useContext(PostContext)
 
     const handleDelete = async () => {
-        const { success, message } = await deletePost(postId)
+        const { success, message } = await deletePost(_id)
         setShowToast({
             show: true,
             message,
             type: success ? 'success' : 'danger'
         })
+    }
+
+    const choosePostUpdate = (postId) => {
+        // if (!postId) {
+        //     setShowToast({
+        //         show: true,
+        //         message: 'Invalid post ID.',
+        //         type: 'danger'
+        //     })
+        //     return
+        // }
+
+        findPostUpdate(postId)
+        setShowUpdatePostModal(true)
     }
 
     return (
@@ -30,6 +44,7 @@ const ActionButtons = ({ url, postId }) => {
             <Button
                 className="post-button btn-sm"
                 variant="outline-warning"
+                onClick={() => choosePostUpdate(_id)}
             >
                 <img src={editIcon} alt="edit" width="24" height="24" />
             </Button>

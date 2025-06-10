@@ -9,12 +9,13 @@ import Toast from 'react-bootstrap/Toast'
 import Col from 'react-bootstrap/Col'
 import SinglePost from '../components/posts/SinglePost'
 import AddPostModal from '../components/posts/AddPostModal'
+import UpdatePostModal from '../components/posts/UpdatePostModal'
 import addIcon from '../assets/plus-circle-fill.svg'
 
 const Dashboard = () => {
   // Contexts
   const {
-    postState: { posts, postsLoading },
+    postState: { posts, postsLoading, postUpdate },
     getPosts,
     isOpenModal,
     setIsOpenModal,
@@ -75,6 +76,7 @@ const Dashboard = () => {
     <>
       {body}
       <AddPostModal />
+      {postUpdate !== null && <UpdatePostModal />}
 
       {/*After post is added, show Toast*/}
       <Toast
