@@ -18,17 +18,7 @@ const ActionButtons = ({ url, _id }) => {
     }
 
     const choosePostUpdate = (postId) => {
-        // if (!postId) {
-        //     setShowToast({
-        //         show: true,
-        //         message: 'Invalid post ID.',
-        //         type: 'danger'
-        //     })
-        //     return
-        // }
-
         findPostUpdate(postId)
-        setShowUpdatePostModal(true)
     }
 
     return (

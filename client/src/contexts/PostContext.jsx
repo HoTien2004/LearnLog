@@ -80,6 +80,7 @@ export const PostContextProvider = ({ children }) => {
       type: FIND_POST_UPDATE,
       payload: post,
     })
+    setShowUpdatePostModal(true)
   }
 
   // Update post

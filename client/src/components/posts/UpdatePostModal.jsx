@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
@@ -16,37 +16,36 @@ const UpdatePostModal = () => {
     // State
     const [updatedPost, setUpdatedPost] = useState(postUpdate)
 
+    useEffect(() => {
+        setUpdatedPost(postUpdate)
+    }, [postUpdate])
+
     const { title, description, url, status } = updatedPost
 
     const onChangeUpdatedPostForm = e => {
         setUpdatedPost({ ...updatedPost, [e.target.name]: e.target.value })
     }
 
+    const closeDialog = () => {
+        setUpdatedPost(postUpdate)
+        setShowUpdatePostModal(false)
+    }
+
     const onSubmit = async e => {
         e.preventDefault()
         const { success, message } = await updatePost(updatedPost)
-        // resetAddPostData()
-        // setShowToast({
-        //     show: true,
-        //     message,
-        //     type: success ? 'success' : 'danger'
-        // })
+        setShowUpdatePostModal(false)
+        setShowToast({
+            show: true,
+            message,
+            type: success ? 'success' : 'danger'
+        })
     }
 
-    // const resetAddPostData = () => {
-    //     setNewPost({ title: '', description: '', url: '', status: 'TO LEARN' })
-    //     setIsOpenModal(false)
-    // }
-
     return (
-        <Modal show={showUpdatePostModal} >
+        <Modal show={showUpdatePostModal} onHide={closeDialog}>
             <Modal.Header closeButton>
                 <Modal.Title>Making progress?</Modal.Title>
-                {/* <Button
-                    variant="close"
-                    aria-label="Close"
-                    onClick={() => setIsOpenModal(false)}
-                /> */}
             </Modal.Header>
             <Form onSubmit={onSubmit}>
                 <Modal.Body>
@@ -99,7 +98,7 @@ const UpdatePostModal = () => {
                     </Form.Group>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="danger">
+                    <Button variant="danger" onClick={closeDialog}>
                         Cancel
                     </Button>
                     <Button variant="success" type="submit">

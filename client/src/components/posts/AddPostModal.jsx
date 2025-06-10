@@ -45,11 +45,6 @@ const AddPostModal = () => {
         <Modal show={isOpenModal} onHide={closeDialog} >
             <Modal.Header closeButton>
                 <Modal.Title>Add New Post</Modal.Title>
-                {/* <Button
-                    variant="close"
-                    aria-label="Close"
-                    onClick={() => setIsOpenModal(false)}
-                /> */}
             </Modal.Header>
             <Form onSubmit={onSubmit}>
                 <Modal.Body>

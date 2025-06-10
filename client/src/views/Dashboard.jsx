@@ -78,7 +78,6 @@ const Dashboard = () => {
       <AddPostModal />
       {postUpdate !== null && <UpdatePostModal />}
 
-      {/*After post is added, show Toast*/}
       <Toast
         show={show}
         style={{
